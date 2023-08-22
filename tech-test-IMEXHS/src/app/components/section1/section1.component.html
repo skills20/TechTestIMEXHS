@@ -1,0 +1,99 @@
+<div class="mt-5 pt-5">
+  <p>
+    Suppose that you need to estimate the area of the stain for the following
+    binary image:
+  </p>
+  <img #imageElement src="../../assets/spot.PNG" alt="Image" class="center" />
+  <p>A way to do that is the following:</p>
+  <ul>
+    <li>Generate n random 2D points inside the whole image</li>
+    <li>
+      Count the number of random points which fell inside the stain
+      (n<sup>i</sup>)
+    </li>
+    <li>
+      Then, <img #imageElement1 src="../../assets/formula.PNG" alt="Image" />
+    </li>
+  </ul>
+  <p>
+    Create a pseudocode routine that solves that problem. Additionally, create a
+    simple Angular application that shows an interface to upload a binary image
+    like the previous image and compute the area of the stain immediately after
+    finishing the image upload (follows the proposed method).
+  </p>
+  <h2>Solution</h2>
+  <ol type="1">
+    <li>Initialize the variables:</li>
+    <ul>
+      <li>n (the total number of random points)</li>
+      <li>n_inside_stain (the number of random points inside the stain)</li>
+      <li>estimated_area_stain (initialized to 0)</li>
+    </ul>
+    <li>Specify a starting value for n (e.g., n = 1).</li>
+    <li>Repeat the following steps:</li>
+    <ul>
+      <li>
+        Generate n random points inside the bounds of the pixel array length.
+      </li>
+      <li>For each random point:</li>
+      <ol type="I">
+        <li>
+          Check if the point is inside the stain (white pixel) in the binary
+          image.
+        </li>
+        <li>
+          If the point is inside the stain, increment n_inside_stain by 1.
+        </li>
+      </ol>
+      <li>
+        Calculate the estimated_area_stain using the formula:
+        estimated_area_stain = ((n_inside_stain / n) * w * h)
+      </li>
+      <li>
+        Increment n (e.g., n *= 2) to double the number of random points for the
+        next iteration.
+      </li>
+    </ul>
+    <li>
+      Continue the loop until a desired level of accuracy is achieved or a
+      maximum number of iterations is reached.
+    </li>
+    <li>
+      The variable estimated_area_stain now contains the estimated area of the
+      stain.
+    </li>
+    <li>
+      You can use the estimated_area_stain value as needed for your analysis or
+      display.
+    </li>
+  </ol>
+  <hr
+    style="height: 2px; border-width: 0; color: gray; background-color: gray"
+  />
+  <p>How many points do you want to test in the image above?</p>
+  <input class="form-control-md" type="number" [(ngModel)]="dots" /><br />
+  <button class="btn btn-primary mt-2" (click)="calculateArea()">
+    Calculate
+  </button>
+  <div *ngIf="areaOfBlackPixels > 0">
+    <p>Area of black pixels: {{ areaOfBlackPixels }} %</p>
+  </div>
+  <br />
+  <hr
+    style="height: 2px; border-width: 0; color: gray; background-color: gray"
+  />
+  <div class="pb-5">
+    <label for="formFile" class="form-label">Upload an image to analyze</label>
+    <input
+      class="form-control"
+      type="file"
+      id="formFile"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+    />
+    <div *ngIf="uploadedAreaOfBlackPixels > 0">
+      <p>Area of black pixels: {{ uploadedAreaOfBlackPixels }} %</p>
+    </div>
+    <img id="output-image" alt="Modified Image" class="center" />
+  </div>
+</div>

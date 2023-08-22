@@ -1,0 +1,111 @@
+<div class="mt-5 pt-5">
+  <h2>High-Level Architecture:</h2>
+  <ol type="1">
+    <li>
+      <strong>Authentication Module:</strong> Responsible for user
+      authentication, ensuring only radiologists can access the system.
+    </li>
+    <li>
+      <strong>Study Management Module:</strong> Handles the storage and
+      retrieval of radiological study information.
+    </li>
+    <li>
+      <strong>Questionnaire Module:</strong> Manages the questionnaire for
+      radiologists to fill out about each study.
+    </li>
+    <li>
+      <strong>Statistics Module:</strong> Provides endpoints for HIS to retrieve
+      statistics about studies read by radiologists.
+    </li>
+    <li>
+      <strong>Data Encryption Module:</strong> Ensures sensitive patient
+      information is encrypted.
+    </li>
+    <li>
+      <strong>Communication Module:</strong> Responsible for communicating with
+      the HIS for sending study results.
+    </li>
+  </ol>
+  <hr
+    style="height: 2px; border-width: 0; color: gray; background-color: gray"
+  />
+  <h2>Information Flows:</h2>
+  <ol type="1">
+    <li>Receiving New Radiological Study:</li>
+    <ul>
+      <li>
+        When the HIS sends a JSON message, the system receives it and stores the
+        information.
+      </li>
+      <li>
+        Patient information (e.g., name, age) is encrypted before storage.
+      </li>
+      <li>Study details are stored as they are.</li>
+    </ul>
+    <li>Radiologist Workflow:</li>
+    <ul>
+      <li>Radiologists authenticate to access the system.</li>
+      <li>They see a list of pending studies and choose one.</li>
+      <li>
+        They answer the questionnaire, which includes questions about water
+        volume and findings.
+      </li>
+      <li>
+        Responses, along with the date and the radiologist's user ID, are stored
+        in the system.
+      </li>
+    </ul>
+    <li>Reading Study Submission:</li>
+    <ul>
+      <li>
+        When a radiologist submits a form, the system sends a POST request to
+        HIS with the necessary data, including an authorization header.
+      </li>
+    </ul>
+    <li>Statistics:</li>
+    <ul>
+      <li>
+        HIS can make GET requests to the statistics endpoint with specific
+        parameters.
+      </li>
+      <li>
+        The system processes the requests and returns statistics in JSON format.
+      </li>
+    </ul>
+  </ol>
+  <hr
+    style="height: 2px; border-width: 0; color: gray; background-color: gray"
+  />
+  <h2>Module Decomposition:</h2>
+  <ol type="1">
+    <li>Authentication Module:</li>
+    <ul>
+      <li>Responsible for user authentication.</li>
+      <li>Ensures security measures are in place.</li>
+    </ul>
+    <li>Study Management Module:</li>
+    <ul>
+      <li>Handles the storage and retrieval of study information.</li>
+      <li>Encrypts patient data before storage.</li>
+    </ul>
+    <li>Questionnaire Module:</li>
+    <ul>
+      <li>Manages the questionnaire for radiologists.</li>
+      <li>Calculates the water percentage and displays it to radiologists.</li>
+    </ul>
+    <li>Statistics Module:</li>
+    <ul>
+      <li>Provides endpoints for HIS to retrieve statistics.</li>
+      <li>Handles statistics calculation based on parameters.</li>
+    </ul>
+    <li>Data Encryption Module:</li>
+    <ul>
+      <li>Responsible for encrypting sensitive patient information.</li>
+    </ul>
+    <li>Communication Module:</li>
+    <ul>
+      <li>Manages communication with HIS for sending study results.</li>
+      <li>Includes authorization headers.</li>
+    </ul>
+  </ol>
+</div>
